@@ -87,9 +87,15 @@ export class CryptoPay {
    * Supported names: `viewItem` - View Item, `openChannel` - Open Channel, openBot - Open Bot, callback - Return
    * @param {string} [options.paid_btn_url] - Optional. Paid button URL. You can set any payment success link (for example link on your bot)
    * @param {string} [options.payload] - Optional. Some data. User ID, payment id, or any data you want to attach to the invoice; up to 1kb
+   * @param {boolean} [options.allow_comments] - Optional. Allow adding comments when paying an invoice. Default is true
+   * @param {boolean} [options.allow_anonymous] - Optional. Allow pay invoice as anonymous. Default is true
    */
   // eslint-disable-next-line no-undef
-  async createInvoice(asset, amount, options = { description, paidBtnName, paidBtnUrl, payload }) {
+  async createInvoice(
+    asset,
+    amount,
+    options = { description, paidBtnName, paidBtnUrl, payload, allow_comments, allow_anonymous },
+  ) {
     return this.callApi('createInvoice', { asset, amount, ...options });
   }
 

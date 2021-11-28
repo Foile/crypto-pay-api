@@ -115,6 +115,10 @@ Amount of the invoice in float. For example: `125.50`
 *Optional but requried when you use paid_btn_name*. Paid button URL. You can set any payment success link (for example link on your bot). Start with https or http.
 * **payload** (string, up to 1kb)
 *Optional*. Some data. User ID, payment id, or any data you want to attach to the invoice.
+* **allow_comments** (boolean)
+*Optional*. Allow adding comments when paying an invoice. Default is true.
+* **allow_anonymous** (boolean)
+*Optional*. Allow pay invoice as anonymous. Default is true.
 
 ```js
 cryptoPay.createInvoice(Assets.BTC, 1, {
