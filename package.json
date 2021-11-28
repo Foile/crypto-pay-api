@@ -1,5 +1,5 @@
 {
-  "name": "crypto-pay-api",
+  "name": "@foile/crypto-pay-api",
   "version": "0.1.0",
   "description": "Cryptocurrency payment system based on @CryptoBot",
   "license": "MIT",

@@ -1,6 +1,6 @@
 ![CryptoPay](media/header.svg)
 
-# crypto-pay-api
+# @foile/crypto-pay-api
 
 **[Crypto Pay](http://t.me/CryptoBot/?start=pay)** is a payment system based on [@CryptoBot](http://t.me/CryptoBot), which allows you to accept payments in cryptocurrency using the API.
 
@@ -9,7 +9,7 @@ This library help you to work with **Crypto Pay** via [Crypto Pay API](https://t
 ## Install
 
 ```sh
-npm i crypto-pay-api
+npm i @foile/crypto-pay-api
 ```
 
 ## Loading and configuring the module
@@ -17,19 +17,19 @@ npm i crypto-pay-api
 ### ES Modules (ESM)
 
 ```js
-import { CryptoPay } from 'crypto-pay-api';
+import { CryptoPay } from '@foile/crypto-pay-api';
 
 const cryptoPay = new CryptoPay(token);
 ```
 
 ### Common JS
 
-If you cannot switch to ESM you can use async `import()` function from CommonJS to load `crypto-pay-api` asynchronously:
+If you cannot switch to ESM you can use async `import()` function from CommonJS to load `@foile/crypto-pay-api` asynchronously:
 
 ```js
 // module.cjs
 (async function run() {
-  const { CryptoPay } = await import('crypto-pay-api');
+  const { CryptoPay } = await import('@foile/crypto-pay-api');
   
   const cryptoPay = new CryptoPay(token);
 })()
@@ -38,7 +38,7 @@ If you cannot switch to ESM you can use async `import()` function from CommonJS 
 Also, you can import supported [assets](#Assets) and [paid button names](#Paid-Button-Names):
 
 ```js
-import { CryptoPay, Assets, PaidButtonNames } from 'crypto-pay-api';
+import { CryptoPay, Assets, PaidButtonNames } from '@foile/crypto-pay-api';
 
 const cryptoPay = new CryptoPay(token);
 ```
