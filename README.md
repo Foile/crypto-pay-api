@@ -43,7 +43,7 @@ import { CryptoPay, Assets, PaidButtonNames } from '@foile/crypto-pay-api';
 const cryptoPay = new CryptoPay(token);
 ```
 
-Look full code in the [examples directory](https://github.com/Foile/crypto-pay-api/tree/examples).
+Look full code in the [examples directory](https://github.com/Foile/crypto-pay-api/tree/main/examples).
 
 ## Usage
 
