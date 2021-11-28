@@ -12,42 +12,19 @@ This library help you to work with **Crypto Pay** via [Crypto Pay API](https://t
 npm i @foile/crypto-pay-api
 ```
 
-## Loading and configuring the module
-
-### ES Modules (ESM)
-
-```js
-import { CryptoPay } from '@foile/crypto-pay-api';
-
-const cryptoPay = new CryptoPay(token);
-```
-
-### Common JS
-
-If you cannot switch to ESM you can use async `import()` function from CommonJS to load `@foile/crypto-pay-api` asynchronously:
-
-```js
-// module.cjs
-(async function run() {
-  const { CryptoPay } = await import('@foile/crypto-pay-api');
-  
-  const cryptoPay = new CryptoPay(token);
-})()
-```
-
-Also, you can import supported [assets](#Assets) and [paid button names](#Paid-Button-Names):
-
-```js
-import { CryptoPay, Assets, PaidButtonNames } from '@foile/crypto-pay-api';
-
-const cryptoPay = new CryptoPay(token);
-```
-
-Look full code in the [examples directory](https://github.com/Foile/crypto-pay-api/tree/main/examples).
-
 ## Usage
 
-First, you need to create your application and get an API token. Open [@CryptoBot](http://t.me/CryptoBot) or [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) (for testnet), send a command `/pay` to create a new app and get API Token.
+First, you need to create your application and get an API token. Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) (for testnet), send a command `/pay` to create a new app and get API Token.
+
+Next step: try to call a simple `getMe()` method to check that everything is working welll:
+
+```js
+const { CryptoPay } = require('@foile/crypto-pay-api');
+  
+const cryptoPay = new CryptoPay(token);
+const app = await cryptoPay.getMe();
+console.log(app);
+```
 
 You can setup net `hostname` (defaults to `pay.crypt.bot`) and `protocol` in optional param:
 
@@ -58,21 +35,29 @@ const cryptoPay = new CryptoPay(token, {
 });
 ```
 
-Net     | Bot               | URL
-------- | ----------------- |------------------------
-testnet | @CryptoTestnetBot | `testnet-pay.crypt.bot`
-mainnet | @CryptoBot        | `pay.crypt.bot`
+Net     | Bot                                                         | Hostname
+------- | ----------------------------------------------------------- |------------------------
+mainnet | [@CryptoBot](http://t.me/CryptoBot?start=pay)               | `pay.crypt.bot`
+testnet | [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) | `testnet-pay.crypt.bot`
 
 > All queries to the Crypto Pay API must be sent over **HTTPS**
 
-Next step: try to call a simple `getMe()` method to check that everything is working welll:
+You can find all available methods in [next chapter](#Methods).
+
+Also, you can get supported [assets](#Assets) and [paid button names](#Paid-Button-Names):
 
 ```js
-const app = await cryptoPay.getMe();
-console.log(app);
+const { CryptoPay, Assets, PaidButtonNames } = require('@foile/crypto-pay-api');
+
+const cryptoPay = new CryptoPay(token);
+cryptoPay.createInvoice(Assets.BTC, 1, {
+  description: 'kitten',
+  paid_btn_name: PaidButtonNames.VIEW_ITEM,
+  paid_btn_url: 'http://placekitten.com/150',
+});
 ```
 
-You can find all available methods in next chapter.
+Look full code in the [examples directory](https://github.com/Foile/crypto-pay-api/tree/main/examples).
 
 ## Methods
 

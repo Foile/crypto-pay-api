@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import url from 'url';
-import fetch from 'node-fetch';
+const url = require('url');
+const fetch = require('node-fetch');
 
-export const Assets = Object.freeze({
+const Assets = Object.freeze({
   BTC: 'BTC',
   TON: 'TON',
   ETH: 'ETH',
@@ -11,7 +11,7 @@ export const Assets = Object.freeze({
   BUSD: 'BUSD',
 });
 
-export const PaidButtonNames = Object.freeze({
+const PaidButtonNames = Object.freeze({
   VIEW_ITEM: 'viewItem',
   OPEN_CHANNEL: 'openChannel',
   OPEN_BOT: 'openBot',
@@ -23,7 +23,7 @@ const defaultOptions = {
   hostname: 'pay.crypt.bot',
 };
 
-export class CryptoPay {
+class CryptoPay {
   /**
    * First, you need to create your application and get an API token. Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) (for testnet), send a command `/pay` to create a new app and get API Token.
    * @param {string} token - Your API token
@@ -153,3 +153,5 @@ export class CryptoPay {
     return this.callApi('getCurrencies');
   }
 }
+
+module.exports = { CryptoPay, Assets, PaidButtonNames };

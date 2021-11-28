@@ -1,5 +1,5 @@
-import test from 'ava';
-import { CryptoPay } from './index.js';
+const test = require('ava');
+const { CryptoPay } = require('./index');
 
 const token = '42:QWERTY';
 const testMethod = 'test';
