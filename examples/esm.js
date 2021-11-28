@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { CryptoPay, Assets, PaidButtonNames } from '../index.js';
+import { CryptoPay, Assets, PaidButtonNames } from '@foile/crypto-pay-api';
 
 const token = '42:YOURTOKEN';
 

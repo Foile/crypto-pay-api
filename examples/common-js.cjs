@@ -2,7 +2,7 @@
 const token = '42:YOURTOKEN';
 
 (async function run() {
-  const { CryptoPay, Assets, PaidButtonNames } = await import('../index.js');
+  const { CryptoPay, Assets, PaidButtonNames } = await import('@foile/crypto-pay-api');
 
   const cryptoPay = new CryptoPay(token, { hostname: 'testnet-pay.crypt.bot' });
 
