@@ -35,7 +35,7 @@ If you cannot switch to ESM you can use async `import()` function from CommonJS 
 })()
 ```
 
-Also, you can import supported [assets]() and [paid button names]():
+Also, you can import supported [assets](#Assets) and [paid button names](#Paid-Button-Names):
 
 ```js
 import { CryptoPay, Assets, PaidButtonNames } from 'crypto-pay-api';
