@@ -91,11 +91,7 @@ class CryptoPay {
    * @param {boolean} [options.allow_anonymous] - Optional. Allow pay invoice as anonymous. Default is true
    */
   // eslint-disable-next-line no-undef
-  async createInvoice(
-    asset,
-    amount,
-    options = { description, paidBtnName, paidBtnUrl, payload, allow_comments, allow_anonymous },
-  ) {
+  async createInvoice(asset, amount, options = {}) {
     return this.callApi('createInvoice', { asset, amount, ...options });
   }
 
@@ -109,7 +105,7 @@ class CryptoPay {
    * @param {number} [options.count] - Optional. Number of invoices to return. Default 100, max 1000
    */
   // eslint-disable-next-line no-undef, no-restricted-globals
-  async getInvoices(options = { asset, invoice_ids, status, offset, count }) {
+  async getInvoices(options = {}) {
     return this.callApi('getInvoices', options);
   }
 
@@ -120,7 +116,7 @@ class CryptoPay {
    * @param {number} [options.count] - Optional. Number of invoices to return. Default 100, max 1000
    */
   // eslint-disable-next-line no-undef
-  async getPayments(options = { offset, count }) {
+  async getPayments(options = {}) {
     return this.callApi('getPayments', options);
   }
 
