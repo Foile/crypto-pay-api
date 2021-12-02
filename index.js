@@ -48,11 +48,12 @@ class CryptoPay {
       (key) => [undefined, null, ''].some((empty) => params[key] === empty) && delete params[key],
     );
 
-    return url.format({ ...this.options, pathname: `app${this.token}/${method}`, query: params }, {});
+    return url.format({ ...this.options, pathname: `api/${method}`, query: params }, {});
   }
 
   async makeRequest(request) {
-    const res = await fetch(request);
+    const headers = { 'Crypto-Pay-API-Token': this.token };
+    const res = await fetch(request, { headers });
     const data = await res.json();
     if (!data.ok) {
       let message = 'API call failed';
