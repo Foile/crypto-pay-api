@@ -111,25 +111,6 @@ class CryptoPay {
   }
 
   /**
-   * Use this method to get paid and unconfirmed invoices of your app. On success, the returns array of paid and unconfirmed invoices
-   * @param {Object} [options]
-   * @param {number} [options.offset] - Optional. Offset needed to return a specific subset of  invoices. Default 0
-   * @param {number} [options.count] - Optional. Number of invoices to return. Default 100, max 1000
-   */
-  // eslint-disable-next-line no-undef
-  async getPayments(options = {}) {
-    return this.callApi('getPayments', options);
-  }
-
-  /**
-   * Use this method to confirm paid invoice of your app. On success, the return confirmed invoice
-   * @param {number} invoice_id - Invoice ID you want to confirm
-   */
-  async confirmPayment(invoice_id) {
-    return this.callApi('confirmPayment', { invoice_id });
-  }
-
-  /**
    * Use this method to get balance of your app. Returns array of assets
    */
   async getBalance() {
