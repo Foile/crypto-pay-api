@@ -18,7 +18,13 @@
     "lint": "eslint .",
     "test": "ava"
   },
-  "keywords": [],
+  "keywords": [
+    "cryptopay",
+    "crypto",
+    "api",
+    "bot",
+    "telegram"
+  ],
   "dependencies": {
     "node-fetch": "^2.6.6"
   },
