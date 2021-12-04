@@ -1,10 +1,10 @@
 {
   "name": "@foile/crypto-pay-api",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Cryptocurrency payment system based on @CryptoBot",
   "license": "MIT",
   "author": "Foile",
-  "main": "index.js",
+  "main": "src/crypto-pay.js",
   "homepage": "https://github.com/Foile/crypto-pay-api#readme",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
     "url": "https://github.com/Foile/crypto-pay-api/issues"
   },
   "scripts": {
-    "prettier": "prettier index.js -w",
+    "prettier": "prettier src examples -w",
     "lint": "eslint .",
     "test": "ava"
   },

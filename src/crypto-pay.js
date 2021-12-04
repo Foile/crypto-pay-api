@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-const url = require('url');
-const fetch = require('node-fetch');
+const EventEmitter = require('events');
+const Api = require('./api');
+const Webhooks = require('./webhooks');
 
 const Assets = Object.freeze({
   BTC: 'BTC',
@@ -18,61 +19,49 @@ const PaidButtonNames = Object.freeze({
   CALLBACK: 'callback',
 });
 
+const UpdateTypes = ['invoice_paid'];
+
 const defaultOptions = {
-  protocol: 'https',
-  hostname: 'pay.crypt.bot',
+  updateVerification: true,
 };
 
 class CryptoPay {
   /**
-   * First, you need to create your application and get an API token. Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) (for testnet), send a command `/pay` to create a new app and get API Token.
+   * First, you need to create your application and get an API token.
+   * Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) (for testnet),
+   * send a command `/pay` to create a new app and get API Token.
    * @param {string} token - Your API token
    * @param {Object} [options]
    * @param {string} [options.protocol] - All queries to the Crypto Pay API must be sent over **HTTPS**
    * @param {string} [options.hostname] - Use `pay.crypt.bot` for mainnet and `testnet-pay.crypt.bot` for testnet
+   * @param {boolean} [options.updateVerification] - Allow verification to check update data by signature.Defaults to true
+   * @param {Object} [options.webhook]
+   * @param {string} options.webhook.serverHostname - Webhook server hostname
+   * @param {number} [options.webhook.serverPort] - Webhook server port. Defaults to 80
+   * @param {string} options.webhook.path - Webhook secret path
+   * @param {Object} [options.webhook.tls] - Webhook TLS options
    */
   constructor(token, options) {
-    this.token = token;
-    if (options && options.hostname) {
-      // Trim protocol
-      const hostname = options.hostname.match(/(\w*:\/\/)?(.+)/)[2];
-      options.hostname = hostname;
-    }
     this.options = { ...defaultOptions, ...options };
-  }
 
-  buildRequest(method, params = {}) {
-    // Remove empty params
-    Object.keys(params).forEach(
-      // eslint-disable-next-line no-param-reassign
-      (key) => [undefined, null, ''].some((empty) => params[key] === empty) && delete params[key],
-    );
+    const emitter = new EventEmitter();
+    this.on = emitter.on.bind(emitter);
+    this.once = emitter.once.bind(emitter);
+    this.off = emitter.removeListener.bind(emitter);
+    this.emit = emitter.emit.bind(emitter);
 
-    return url.format({ ...this.options, pathname: `api/${method}`, query: params }, {});
-  }
+    const api = new Api(token, this.options);
+    this.callApi = api.callApi.bind(api);
 
-  async makeRequest(request) {
-    const headers = { 'Crypto-Pay-API-Token': this.token };
-    const res = await fetch(request, { headers });
-    const data = await res.json();
-    if (!data.ok) {
-      let message = 'API call failed';
-      if (data.error) {
-        message += `: ${JSON.stringify(data.error)}`;
-      }
-      throw new Error(message);
+    if (this.options.webhook) {
+      this.webhooks = new Webhooks(token, this.options, this.handleUpdate.bind(this));
     }
-
-    return data.result;
   }
 
-  async callApi(method, params) {
-    const request = this.buildRequest(method, params);
-    return this.makeRequest(request);
-  }
-
+  // API
   /**
-   * A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the app
+   * A simple method for testing your app's authentication token.
+   * Requires no parameters. Returns basic information about the app
    */
   getMe() {
     return this.callApi('getMe');
@@ -99,7 +88,8 @@ class CryptoPay {
   /**
    * Use this method to get invoices of your app. On success, the returns array of invoices
    * @param {Object} [options]
-   * @param {string} [options.asset] - Optional. Currency code. Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`. Default: all assets
+   * @param {string} [options.asset] - Optional. Currency code.
+   * Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`. Default: all assets
    * @param {string} [options.invoice_ids] - Optional. Invoice IDs separated by comma
    * @param {string} [options.status] - Optional. Status of invoices. Available statusses: active or paid. Default: all statusses
    * @param {number} [options.offset] - Optional. Offset needed to return a specific subset of invoices. Default 0
@@ -129,6 +119,26 @@ class CryptoPay {
    */
   async getCurrencies() {
     return this.callApi('getCurrencies');
+  }
+
+  // Webhooks
+  /**
+   * Subscribe to an invoice paid event
+   * @param {function} handler – Invoice paid handler
+   */
+  invoicePaid(handler) {
+    return this.on('invoice_paid', handler)
+  }
+
+  /**
+   * @private
+   */
+  handleUpdate(update) {
+    const { update_type, ...data } = update;
+
+    if (!UpdateTypes.some((key) => key === update_type)) return;
+
+    this.emit(update_type, data);
   }
 }
 
