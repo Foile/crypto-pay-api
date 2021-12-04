@@ -14,6 +14,8 @@ npm i @foile/crypto-pay-api
 
 ## Usage
 
+### API
+
 First, you need to create your application and get an API token. Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http://t.me/CryptoTestnetBot?start=pay) (for testnet), send a command `/pay` to create a new app and get API Token.
 
 Next step: try to call a simple `getMe()` method to check that everything is working welll:
@@ -59,7 +61,37 @@ cryptoPay.createInvoice(Assets.BTC, 1, {
 
 Look full code in the [examples directory](https://github.com/Foile/crypto-pay-api/tree/main/examples).
 
+### Webhooks
+
+Use Webhooks to get updates for the app.
+
+If you'd like to make sure that the Webhook request comes from Crypto Pay, we recommend using a secret path in the URL, e.g. `https://www.example.com/<secret>`.
+
+> Webhooks will send may at least one time
+
+```js
+const cryptoPay = new CryptoPay(token, {
+    webhook: {
+      serverHostname: 'localhost',
+      serverPort: 4200,
+      path: '/secret-path'
+    },
+  });
+
+cryptoPay.on('invoice_paid', update => console.log(update.payload));
+```
+
+You can use pretty simple alias methods named from update names:
+
+```js
+cryptoPay.invoicePaid(update => console.log(update.payload));
+```
+
+See all available updates [here](#Update-Types).
+
 ## Methods
+
+**API**
 
 * [getMe](#getMe)
 * [createInvoice](#createInvoice)
@@ -69,6 +101,13 @@ Look full code in the [examples directory](https://github.com/Foile/crypto-pay-a
 * [getBalance](#getBalance)
 * [getExchangeRates](#getExchangeRates)
 * [getCurrencies](#getCurrencies)
+
+**Updates**
+
+* [on](#on)
+  * [invoicePaid](#invoicePaid)
+* [once](#once)
+* [off](#off)
 
 ### getMe
 
@@ -129,31 +168,7 @@ Use this method to get invoices of your app. On success, the returns array of in
 *Optional*. Number of invoices to return. Default 100, max 1000.
 
 ```js
-cryptoPay.getInvoices({ asset: Assets.BTC, count: 10 })
-```
-
-### getPayments
-
-Use this method to get paid and unconfirmed invoices of your app. On success, the returns array of paid and unconfirmed invoices.
-
-* **offset** (number)
-*Optional*. Offset needed to return a specific subset of  invoices. Default 0.
-* **count** (number)
-*Optional*. Number of invoices to return. Default 100, max 1000.
-
-```js
-cryptoPay.getPayments({ offset: 200, count: 100 })
-```
-
-### confirmPayment
-
-Use this method to confirm paid invoice of your app. On success, the return confirmed invoice.
-
-* **invoice_id** (number)
-Invoice ID you want to confirm.
-
-```js
-cryptoPay.confirmPayment(42)
+cryptoPay.getInvoices({ asset: Assets.BTC, count: 10 });
 ```
 
 ### getBalance
@@ -161,7 +176,7 @@ cryptoPay.confirmPayment(42)
 Use this method to get balance of your app. Returns array of assets.
 
 ```js
-cryptoPay.getBalance()
+cryptoPay.getBalance();
 ```
 
 ### getExchangeRates
@@ -169,7 +184,7 @@ cryptoPay.getBalance()
 Use this method to get exchange rates of supported currencies. Returns array of currencies.
 
 ```js
-cryptoPay.getExchangeRates()
+cryptoPay.getExchangeRates();
 ```
 
 ### getCurrencies
@@ -177,8 +192,51 @@ cryptoPay.getExchangeRates()
 Use this method to supported currencies. Returns array of currencies.
 
 ```js
-cryptoPay.getCurrencies()
+cryptoPay.getCurrencies();
 ```
+
+### on
+
+Adds handler to the choosen [update type](#Update-Types).
+
+```js
+cryptoPay.on('invoice_paid', update => console.log(update.payload));
+```
+
+### invoicePaid
+
+Adds handler to `invoice_paid` update.
+
+```js
+cryptoPay.invoicePaid(update => console.log(update.payload));
+```
+
+### once
+
+Adds a one-time handler to the choosen [update type](#Update-Types).
+
+```js
+cryptoPay.once('invoice_paid', update => console.log(update.payload));
+```
+
+### off
+
+Removes the specified listener from the listener array for the event named eventName.
+
+```js
+const subscriber = (update) => console.log(update.payload)
+
+cryptoPay.on('invoice_paid', subscriber);
+
+setTimeout(
+  () => cryptoPay.off('invoice_paid', subscriber),
+  10000
+);
+```
+
+## Update Types
+
+* [invoice_paid](#getMe)
 
 ## Constants
 
