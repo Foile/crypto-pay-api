@@ -69,7 +69,6 @@ class Webhooks {
         try {
           update = JSON.parse(body);
         } catch (error) {
-          console.error(error);
           res.writeHead(415);
           res.end();
         }
@@ -78,7 +77,6 @@ class Webhooks {
         } catch (error) {
           res.writeHead(500);
           res.end();
-          console.error(error);
         }
         if (!res.finished) {
           res.end();

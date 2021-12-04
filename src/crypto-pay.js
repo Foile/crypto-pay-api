@@ -127,7 +127,7 @@ class CryptoPay {
    * @param {function} handler – Invoice paid handler
    */
   invoicePaid(handler) {
-    return this.on('invoice_paid', handler)
+    return this.on('invoice_paid', handler);
   }
 
   /**
