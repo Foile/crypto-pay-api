@@ -43,10 +43,7 @@ class Webhooks {
 
   verifyUpdate(update, signature) {
     const secret = createHash('sha256').update(this.token).digest();
-    const serializedData = Object.keys(update)
-      .sort()
-      .map((key) => `${key}=${update[key]}`)
-      .join('\n');
+    const serializedData = JSON.stringify(update)
     const hmac = createHmac('sha256', secret).update(serializedData).digest('hex');
     return hmac === signature;
   }
