@@ -96,8 +96,6 @@ See all available updates [here](#Update-Types).
 * [getMe](#getMe)
 * [createInvoice](#createInvoice)
 * [getInvoices](#getInvoices)
-* [getPayments](#getPayments)
-* [confirmPayment](#confirmPayment)
 * [getBalance](#getBalance)
 * [getExchangeRates](#getExchangeRates)
 * [getCurrencies](#getCurrencies)
