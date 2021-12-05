@@ -71,12 +71,12 @@ If you'd like to make sure that the Webhook request comes from Crypto Pay, we re
 
 ```js
 const cryptoPay = new CryptoPay(token, {
-    webhook: {
-      serverHostname: 'localhost',
-      serverPort: 4200,
-      path: '/secret-path'
-    },
-  });
+  webhook: {
+    serverHostname: 'localhost',
+    serverPort: 4200,
+    path: '/secret-path'
+  },
+});
 
 cryptoPay.on('invoice_paid', update => console.log(update.payload));
 ```
