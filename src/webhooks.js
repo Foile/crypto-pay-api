@@ -95,7 +95,7 @@ class WebhookError extends Error {
       Error.captureStackTrace(this, WebhookError);
     }
 
-    this.code = code
+    this.code = code;
   }
 }
 
