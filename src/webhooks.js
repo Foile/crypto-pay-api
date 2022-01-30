@@ -54,7 +54,7 @@ class Webhooks {
         if (typeof next === 'function') {
           return next();
         }
-        res.statusCode = 403;
+        res.statusCode = 400;
         return res.end();
       }
       let body = '';
