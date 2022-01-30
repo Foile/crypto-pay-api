@@ -86,6 +86,19 @@ class CryptoPay {
   }
 
   /**
+   * Use this method to send coins from your app to the user. Returns object of completed transfer
+   * @param {number} user_id - Telegram User ID
+   * @param {string} asset - Currency code. Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`
+   * @param {string} amount - Amount of the transfer in float. For example: `125.50`
+   * @param {string} spend_id - Uniq ID to make your request idempotent. Up to 64 symbols
+   * @param {Object} [options]
+   * @param {string} [options.comment] - Optional. The comment of the invoice. Up to 1024 symbols
+   */
+  async transfer(user_id, asset, amount, spend_id, options = {}) {
+    return this.callApi('transfer', { user_id, asset, amount, spend_id, ...options });
+  }
+
+  /**
    * Use this method to get invoices of your app. On success, the returns array of invoices
    * @param {Object} [options]
    * @param {string} [options.asset] - Optional. Currency code.
