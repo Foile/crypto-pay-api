@@ -77,7 +77,7 @@ class CryptoPay {
    * @param {string} [options.paid_btn_name] - Optional. Paid button name. This button will be shown when your invoice was paid
    * Supported names: `viewItem` - View Item, `openChannel` - Open Channel, openBot - Open Bot, callback - Return
    * @param {string} [options.paid_btn_url] - Optional. Paid button URL. You can set any payment success link (for example link on your bot)
-   * @param {string} [options.payload] - Optional. Some data. User ID, payment id, or any data you want to attach to the invoice; up to 1kb
+   * @param {string} [options.payload] - Optional. Some data. User ID, payment id, or any data you want to attach to the invoice; up to 4kb
    * @param {boolean} [options.allow_comments] - Optional. Allow adding comments when paying an invoice. Default is true
    * @param {boolean} [options.allow_anonymous] - Optional. Allow pay invoice as anonymous. Default is true
    * @param {number} [options.expires_in] - Optional. You can set the expiration date of the invoice in seconds. Use this period: 1-2678400 seconds
