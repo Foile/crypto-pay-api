@@ -35,7 +35,7 @@ class Webhooks {
           return true;
         }
       });
-      if (!signature || !this.verifyUpdate(update, signature)) return;
+      if (!signature || !this.verifyUpdate(update, signature)) throw new WebhookError(400, 'Wrong signature');
     }
 
     this.updateHandler(update);
@@ -43,7 +43,7 @@ class Webhooks {
 
   verifyUpdate(update, signature) {
     const secret = createHash('sha256').update(this.token).digest();
-    const serializedData = JSON.stringify(update)
+    const serializedData = JSON.stringify(update);
     const hmac = createHmac('sha256', secret).update(serializedData).digest('hex');
     return hmac === signature;
   }
@@ -72,7 +72,11 @@ class Webhooks {
         try {
           requestHandler(update, req.headers);
         } catch (error) {
-          res.writeHead(500);
+          if (error.code) {
+            res.writeHead(error.code, error.message);
+          } else {
+            res.writeHead(500);
+          }
           res.end();
         }
         if (!res.finished) {
@@ -80,6 +84,18 @@ class Webhooks {
         }
       });
     };
+  }
+}
+
+class WebhookError extends Error {
+  constructor(code, ...params) {
+    super(...params);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, WebhookError);
+    }
+
+    this.code = code
   }
 }
 
