@@ -70,15 +70,17 @@ class CryptoPay {
   /**
    * Use this method to create a new invoice. Returns object of created invoice
    * @param {string} asset - Currency code. Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`
-   * @param {string} amount - Amount of invoice. For example: `125.50`
+   * @param {string} amount - Amount of the invoice in float. For example: `125.50`
    * @param {Object} [options]
    * @param {string} [options.description] - Optional. Description of invoice. Up to 1024 symbols
+   * @param {string} [options.hidden_message] - Optional. The message will show when the user pays your invoice
    * @param {string} [options.paid_btn_name] - Optional. Paid button name. This button will be shown when your invoice was paid
    * Supported names: `viewItem` - View Item, `openChannel` - Open Channel, openBot - Open Bot, callback - Return
    * @param {string} [options.paid_btn_url] - Optional. Paid button URL. You can set any payment success link (for example link on your bot)
    * @param {string} [options.payload] - Optional. Some data. User ID, payment id, or any data you want to attach to the invoice; up to 1kb
    * @param {boolean} [options.allow_comments] - Optional. Allow adding comments when paying an invoice. Default is true
    * @param {boolean} [options.allow_anonymous] - Optional. Allow pay invoice as anonymous. Default is true
+   * @param {number} [options.expires_in] - Optional. You can set the expiration date of the invoice in seconds. Use this period: 1-2678400 seconds
    */
   // eslint-disable-next-line no-undef
   async createInvoice(asset, amount, options = {}) {
