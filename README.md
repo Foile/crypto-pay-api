@@ -95,6 +95,7 @@ See all available updates [here](#Update-Types).
 
 * [getMe](#getMe)
 * [createInvoice](#createInvoice)
+* [transfer](#transfer)
 * [getInvoices](#getInvoices)
 * [getBalance](#getBalance)
 * [getExchangeRates](#getExchangeRates)
@@ -125,6 +126,8 @@ Currency code. Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `US
 Amount of the invoice in float. For example: `125.50`
 * **description** (string)
 *Optional*. Description of the invoice. Up to 1024 symbols.
+* **hidden_message** (string)
+*Optional*. The message will show when the user pays your invoice.
 * **paid_btn_name** (string) default - `callback`
 *Optional*. Paid button name. This button will be shown when your invoice was paid. Supported names:
 
@@ -135,12 +138,14 @@ Amount of the invoice in float. For example: `125.50`
 
 * **paid_btn_url** (string)
 *Optional but requried when you use paid_btn_name*. Paid button URL. You can set any payment success link (for example link on your bot). Start with https or http.
-* **payload** (string, up to 1kb)
+* **payload** (string, up to 4kb)
 *Optional*. Some data. User ID, payment id, or any data you want to attach to the invoice.
 * **allow_comments** (boolean)
 *Optional*. Allow adding comments when paying an invoice. Default is true.
 * **allow_anonymous** (boolean)
 *Optional*. Allow pay invoice as anonymous. Default is true.
+* **expires_in** (number)
+*Optional*. You can set the expiration date of the invoice in seconds. Use this period: 1-2678400 seconds.
 
 ```js
 cryptoPay.createInvoice(Assets.BTC, 1, {
@@ -148,6 +153,25 @@ cryptoPay.createInvoice(Assets.BTC, 1, {
   paid_btn_name: PaidButtonNames.VIEW_ITEM,
   paid_btn_url: 'http://placekitten.com/150',
 });
+```
+
+### transfer
+
+Use this method to send coins from your app to the user. Returns object of completed transfer.
+
+* **user_id** (number)
+Telegram User ID. The user needs to have an account in our bot (send /start if no).
+* **asset** (string)
+Currency code. Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`.
+* **amount** (string)
+Amount of the transfer in float. For example: `125.50`
+* **spend_id** (string)
+It is used to make your request idempotent. It's guaranteed that only one of the transfers with the same spend_id will be accepted by Crypto Pay API. This parameter is useful when the transfer should be retried (i.e. request timeout/connection reset/500 HTTP status/etc). You can use a withdrawal id or something. Up to 64 symbols.
+* **comment** (string)
+*Optional*. The comment of the invoice. The comment will show in the notification about the transfer. Up to 1024 symbols.
+
+```js
+cryptoPay.transfer(121011054, Assets.ETH, 0.1, 'ZG9uYXRl', { comment: 'donate' });
 ```
 
 ### getInvoices
