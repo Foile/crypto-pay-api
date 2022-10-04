@@ -121,31 +121,31 @@ cryptoPay.getMe();
 Use this method to create a new invoice. Returns object of created invoice.
 
 * **asset** (string)
-Currency code. Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`.
+Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`.
 * **amount** (string)
 Amount of the invoice in float. For example: `125.50`
 * **description** (string)
-*Optional*. Description of the invoice. Up to 1024 symbols.
+*Optional*. Description for the invoice. User will see this description when they pay the invoice. Up to 1024 characters.
 * **hidden_message** (string)
-*Optional*. The message will show when the user pays your invoice.
+*Optional*. Text of the message that will be shown to a user after the invoice is paid. Up to 2048 characters.
 * **paid_btn_name** (string) default - `callback`
-*Optional*. Paid button name. This button will be shown when your invoice was paid. Supported names:
+*Optional*. Name of the button that will be shown to a user after the invoice is paid. Supported names:
 
   * `viewItem` - View Item
-  * `openChannel` - Open Channel
+  * `openChannel` - View Channel
   * `openBot` - Open Bot
   * `callback` - Return
 
 * **paid_btn_url** (string)
-*Optional but requried when you use paid_btn_name*. Paid button URL. You can set any payment success link (for example link on your bot). Start with https or http.
-* **payload** (string, up to 4kb)
-*Optional*. Some data. User ID, payment id, or any data you want to attach to the invoice.
+*Optional* Required if paid_btn_name is used. URL to be opened when the button is pressed. You can set any success link (for example, a link to your bot). Starts with https or http.
+* **payload** (string)
+*Optional*. Any data you want to attach to the invoice (for example, user ID, payment ID, ect). Up to 4kb.
 * **allow_comments** (boolean)
-*Optional*. Allow adding comments when paying an invoice. Default is true.
+*Optional*. Allow a user to add a comment to the payment. Default is true.
 * **allow_anonymous** (boolean)
-*Optional*. Allow pay invoice as anonymous. Default is true.
+*Optional*. Allow a user to pay the invoice anonymously. Default is true.
 * **expires_in** (number)
-*Optional*. You can set the expiration date of the invoice in seconds. Use this period: 1-2678400 seconds.
+*Optional*. You can set a payment time limit for the invoice in seconds. Values between 1-2678400 are accepted.
 
 ```js
 cryptoPay.createInvoice(Assets.BTC, 1, {
@@ -162,13 +162,13 @@ Use this method to send coins from your app to the user. Returns object of compl
 * **user_id** (number)
 Telegram User ID. The user needs to have an account in our bot (send /start if no).
 * **asset** (string)
-Currency code. Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`.
+Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`.
 * **amount** (string)
-Amount of the transfer in float. For example: `125.50`
+Amount of the transfer in float. The minimum and maximum amounts for each of the support asset roughly correspond to the limit of 1-25000 USD. Use [getExchangeRates](#getExchangeRates) to convert amounts. For example: `125.50`
 * **spend_id** (string)
-It is used to make your request idempotent. It's guaranteed that only one of the transfers with the same spend_id will be accepted by Crypto Pay API. This parameter is useful when the transfer should be retried (i.e. request timeout/connection reset/500 HTTP status/etc). You can use a withdrawal id or something. Up to 64 symbols.
+Unique ID to make your request idempotent and ensure that only one of the transfers with the same spend_id is accepted from your app. This parameter is useful when the transfer should be retried (i.e. request timeout, connection reset, 500 HTTP status, etc). Up to 64 symbols.
 * **comment** (string)
-*Optional*. The comment of the invoice. The comment will show in the notification about the transfer. Up to 1024 symbols.
+*Optional*. Comment for the transfer. Users will see this comment when they receive a notification about the transfer. Up to 1024 symbols.
 * **disable_send_notification** (boolean)
 *Optional*. Pass true if the user should not receive a notification about the transfer. Default is false.
 
@@ -181,15 +181,15 @@ cryptoPay.transfer(121011054, Assets.ETH, 0.1, 'ZG9uYXRl', { comment: 'donate' }
 Use this method to get invoices of your app. On success, the returns array of invoices.
 
 * **asset** (string)
-*Optional*. Currency code. Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`. Default: all assets.
+*Optional*. Currency codes separated by comma. Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`. Defaults to all assets.
 * **invoice_ids** (string)
 *Optional*. Invoice IDs separated by comma.
 * **status** (string)
-*Optional*. Status of invoices. Available statusses: active or paid. Default: all statusses.
+*Optional*. Status of invoices to be returned. Available statuses: `active` and `paid`. Defaults to all statuses.
 * **offset** (number)
-*Optional*. Offset needed to return a specific subset of  invoices. Default 0.
+*Optional*. Offset needed to return a specific subset of invoices. Default is 0.
 * **count** (number)
-*Optional*. Number of invoices to return. Default 100, max 1000.
+*Optional*. Number of invoices to be returned. Values between 1-1000 are accepted. Default is 100.
 
 ```js
 cryptoPay.getInvoices({ asset: Assets.BTC, count: 10 });
