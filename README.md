@@ -169,6 +169,8 @@ Amount of the transfer in float. For example: `125.50`
 It is used to make your request idempotent. It's guaranteed that only one of the transfers with the same spend_id will be accepted by Crypto Pay API. This parameter is useful when the transfer should be retried (i.e. request timeout/connection reset/500 HTTP status/etc). You can use a withdrawal id or something. Up to 64 symbols.
 * **comment** (string)
 *Optional*. The comment of the invoice. The comment will show in the notification about the transfer. Up to 1024 symbols.
+* **disable_send_notification** (boolean)
+*Optional*. Pass true if the user should not receive a notification about the transfer. Default is false.
 
 ```js
 cryptoPay.transfer(121011054, Assets.ETH, 0.1, 'ZG9uYXRl', { comment: 'donate' });

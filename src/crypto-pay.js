@@ -95,6 +95,7 @@ class CryptoPay {
    * @param {string} spend_id - Uniq ID to make your request idempotent. Up to 64 symbols
    * @param {Object} [options]
    * @param {string} [options.comment] - Optional. The comment of the invoice. Up to 1024 symbols
+   * @param {boolean} [options.disable_send_notification] - Optional. Pass true if the user should not receive a notification about the transfer. Default is false
    */
   async transfer(user_id, asset, amount, spend_id, options = {}) {
     return this.callApi('transfer', { user_id, asset, amount, spend_id, ...options });
