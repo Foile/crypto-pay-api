@@ -121,7 +121,7 @@ cryptoPay.getMe();
 Use this method to create a new invoice. Returns object of created invoice.
 
 * **asset** (string)
-Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`.
+Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT` and `USDC`.
 * **amount** (string)
 Amount of the invoice in float. For example: `125.50`
 * **description** (string)
@@ -162,7 +162,7 @@ Use this method to send coins from your app to the user. Returns object of compl
 * **user_id** (number)
 Telegram User ID. The user needs to have an account in our bot (send /start if no).
 * **asset** (string)
-Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`.
+Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT` and `USDC`.
 * **amount** (string)
 Amount of the transfer in float. The minimum and maximum amounts for each of the support asset roughly correspond to the limit of 1-25000 USD. Use [getExchangeRates](#getExchangeRates) to convert amounts. For example: `125.50`
 * **spend_id** (string)
@@ -181,7 +181,7 @@ cryptoPay.transfer(121011054, Assets.ETH, 0.1, 'ZG9uYXRl', { comment: 'donate' }
 Use this method to get invoices of your app. On success, the returns array of invoices.
 
 * **asset** (string)
-*Optional*. Currency codes separated by comma. Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`. Defaults to all assets.
+*Optional*. Currency codes separated by comma. Supported assets: `BTC`, `TON`, `ETH`, `USDT` and `USDC`. Defaults to all assets.
 * **invoice_ids** (string)
 *Optional*. Invoice IDs separated by comma.
 * **status** (string)
@@ -273,7 +273,6 @@ constant      | value
 `Assets.ETH`  | `ETH`
 `Assets.USDT` | `USDT`
 `Assets.USDC` | `USDC`
-`Assets.BUSD` | `BUSD`
 
 ### Paid Button Names
 
