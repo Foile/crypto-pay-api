@@ -9,7 +9,6 @@ const Assets = Object.freeze({
   ETH: 'ETH',
   USDT: 'USDT',
   USDC: 'USDC',
-  BUSD: 'BUSD',
 });
 
 const PaidButtonNames = Object.freeze({
@@ -69,7 +68,7 @@ class CryptoPay {
 
   /**
    * Use this method to create a new invoice. Returns object of created invoice
-   * @param {string} asset - Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`
+   * @param {string} asset - Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT` and `USDC`
    * @param {string} amount - Amount of the invoice in float. For example: `125.50`
    * @param {Object} [options]
    * @param {string} [options.description] - Optional. Description for the invoice. User will see this description when they pay the invoice. Up to 1024 characters
@@ -90,7 +89,7 @@ class CryptoPay {
   /**
    * Use this method to send coins from your app to the user. Returns object of completed transfer
    * @param {number} user_id - Telegram User ID
-   * @param {string} asset - Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`
+   * @param {string} asset - Currency code. Supported assets: `BTC`, `TON`, `ETH`, `USDT` and `USDC`
    * @param {string} amount - Amount of the transfer in float. The minimum and maximum amounts for each of the support asset roughly correspond to the limit of 1-25000 USD. Use getExchangeRates to convert amounts. For example: `125.50`
    * @param {string} spend_id - Uniq ID to make your request idempotent. Up to 64 symbols
    * @param {Object} [options]
@@ -105,7 +104,7 @@ class CryptoPay {
    * Use this method to get invoices of your app. On success, the returns array of invoices
    * @param {Object} [options]
    * @param {string} [options.asset] - Optional. Currency codes separated by comma.
-   * Supported assets: `BTC`, `TON`, `ETH`, `USDT`, `USDC` and `BUSD`. Defaults to all assets
+   * Supported assets: `BTC`, `TON`, `ETH`, `USDT` and `USDC`. Defaults to all assets
    * @param {string} [options.invoice_ids] - Optional. Invoice IDs separated by comma
    * @param {string} [options.status] - Optional. Status of invoices to be returned. Available statuses: `active` and `paid`. Defaults to all statuses
    * @param {number} [options.offset] - Optional. Offset needed to return a specific subset of invoices. Default is 0
